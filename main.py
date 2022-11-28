@@ -13,6 +13,8 @@ class Parser:
 
         return answer_re[1]
 
+      
+
     def arguments_parser(self):
         parser = argparse.ArgumentParser()
         parser.add_argument(dest='path_dir', type=str, help='path of the input file')
