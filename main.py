@@ -2,35 +2,40 @@ import argparse
 import re
 
 
-class Parser:
+class XmlToStlConverter:
     def __init__(self):
-        data = dict()
+        self.data = dict()
 
-    def detect_uncoding(self, input_obj):
+    def detect_encoding(self, path_dir):
         pattern = r'(?<=encoding=")(.*)("\?\>)'
-        searching_line = input_obj.readline()
-        answer_re = re.search(pattern, searching_line)
+        with open(file=path_dir, mode='r') as temp_xml:
+            searching_line = temp_xml.readline()
+            answer_re = re.search(pattern, searching_line)
+            encoding = answer_re[1]
 
-        return answer_re[1]
 
-      
+        self.data['encoding'] = encoding
 
     def arguments_parser(self):
         parser = argparse.ArgumentParser()
         parser.add_argument(dest='path_dir', type=str, help='path of the input file')
         args = parser.parse_args()
         path_dir = args.path_dir
-
-        return path_dir
+        self.data['path_dir'] = path_dir
         
+        return path_dir
 
-
-
+    def recursive_scanner():
+        pass
 
 
 if __name__ == '__main__':
-    main_parser = Parser()
-    path_dir = main_parser.arguments_parser()
-    with open(file=path_dir, mode='r') as temp_xml:
-        uncoding = main_parser.detect_uncoding(temp_xml)
-        print(uncoding)
+    main_converter = XmlToStlConverter()
+    path_dir = main_converter.arguments_parser()
+    main_converter.detect_encoding(path_dir)
+
+    print(main_converter.data['encoding'])
+    print(main_converter.data['path_dir'])
+
+    print(main_converter.data)
+    
