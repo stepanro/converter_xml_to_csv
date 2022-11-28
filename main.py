@@ -22,8 +22,6 @@ class Parser:
 
 
 
-
-
 if __name__ == '__main__':
     main_parser = Parser()
 
