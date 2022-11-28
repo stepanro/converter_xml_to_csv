@@ -18,9 +18,11 @@ class Parser:
     def arguments_parser(self):
         parser = argparse.ArgumentParser()
         parser.add_argument(dest='path_dir', type=str, help='path of the input file')
+        args = parser.parse_args()
+        path_dir = args.path_dir
 
-        return parser
-
+        return path_dir
+        
 
 
 
@@ -28,11 +30,7 @@ class Parser:
 
 if __name__ == '__main__':
     main_parser = Parser()
-
-    parser = arguments_parser()
-    args = parser.parse_args()
-    path_dir = args.path_dir
-
+    path_dir = main_parser.arguments_parser()
     with open(file=path_dir, mode='r') as temp_xml:
-        uncoding = detect_uncoding(temp_xml)
+        uncoding = main_parser.detect_uncoding(temp_xml)
         print(uncoding)
