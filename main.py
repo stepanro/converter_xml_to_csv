@@ -1,19 +1,21 @@
 import argparse
 import re
-
+from chardet.universaldetector import UniversalDetector
 
 class XmlToStlConverter:
     def __init__(self):
         self.data = dict()
 
     def detect_encoding(self, path_dir):
-        pattern = r'(?<=encoding=")(.*)("\?\>)'
-        with open(file=path_dir, mode='r', encoding='windows-1251') as temp_xml:
-            searching_line = temp_xml.readline()
-            answer_re = re.search(pattern, searching_line)
-            encoding = answer_re[1]
-
-
+        with open(file=path_dir, mode='rb') as temp_xml:
+            detector = UniversalDetector()
+            for line in temp_xml.readlines():
+                detector.feed(line)
+                if detector.done:
+                    break
+            detector.close()
+            encoding = detector.result['encoding']
+                    
         self.data['encoding'] = encoding
 
     def arguments_parser(self):
