@@ -8,7 +8,7 @@ class XmlToStlConverter:
 
     def detect_encoding(self, path_dir):
         pattern = r'(?<=encoding=")(.*)("\?\>)'
-        with open(file=path_dir, mode='r') as temp_xml:
+        with open(file=path_dir, mode='r', encoding='windows-1251') as temp_xml:
             searching_line = temp_xml.readline()
             answer_re = re.search(pattern, searching_line)
             encoding = answer_re[1]
@@ -25,8 +25,10 @@ class XmlToStlConverter:
         
         return path_dir
 
-    def recursive_scanner():
-        pass
+    def recursive_scanner(self):
+        with open(file=self.data['path_dir'], mode='r', encoding=self.data['encoding']) as temp_xml:
+            for line in temp_xml.readlines():
+                print(line)
 
 
 if __name__ == '__main__':
@@ -36,6 +38,6 @@ if __name__ == '__main__':
 
     print(main_converter.data['encoding'])
     print(main_converter.data['path_dir'])
+    main_converter.recursive_scanner()
 
-    print(main_converter.data)
     
