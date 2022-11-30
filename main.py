@@ -30,16 +30,13 @@ class XmlToStlConverter:
     def recursive_scanner(self):
         with open(file=self.data['path_dir'], mode='r', encoding=self.data['encoding']) as temp_xml:
             for line in temp_xml.readlines():
-                print(line)
+                print(line, end=' ')
 
 
 if __name__ == '__main__':
     main_converter = XmlToStlConverter()
     path_dir = main_converter.arguments_parser()
     main_converter.detect_encoding(path_dir)
-
-    print(main_converter.data['encoding'])
-    print(main_converter.data['path_dir'])
     main_converter.recursive_scanner()
 
     
