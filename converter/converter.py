@@ -3,7 +3,6 @@ import re
 from chardet.universaldetector import UniversalDetector
 
 
-
 class XmlToStlConverter:
     def __init__(self, column_name):
         self.data = dict()
@@ -27,6 +26,15 @@ class XmlToStlConverter:
         args = parser.parse_args()
         path_dir = args.path_dir
         self.data['path_dir'] = path_dir
+        pattern = r'(?<=\/)(.+)(?<=\.xml)'
+        name_in_xml_file = re.findall(pattern, path_dir)[0]
+        self.data['name_in_xml_file'] = name_in_xml_file
+        pattern = r'(?<=\/)(.+)(?=\.xml)'
+        name_out_csv_file = re.findall(pattern, path_dir)[0]
+        self.data['name_out_csv_file'] = name_out_csv_file + '.csv'
+
+        with open(file=self.data['name_out_csv_file'], mode='a', encoding=self.data['encoding']) as temp_csv:
+            temp_csv.write(self.data['name_in_xml_file'])
         
         return path_dir
 
@@ -34,9 +42,10 @@ class XmlToStlConverter:
         with open(file=self.data['path_dir'], mode='r', encoding=self.data['encoding']) as temp_xml:
             for line in temp_xml.readlines():
                 for pattern in self.column_name.values():
-                    answer_regular = re.findall(pattern, line)
+                    answer_regular = re.findall(pattern, line)[0][1]
                     if answer_regular:
-                        print(answer_regular[0][1])
+                        with open(file=self.data['name_out_csv_file'], mode='a', encoding=self.data['encoding']) as temp_csv:
+                            temp_csv.write(answer_regular)
                     else:
                         pass
 
