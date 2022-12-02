@@ -40,12 +40,20 @@ class XmlToStlConverter:
 
     def recursive_scanner(self):
         with open(file=self.data['path_dir'], mode='r', encoding=self.data['encoding']) as temp_xml:
+            count_column_name = len(self.column_name)
             for line in temp_xml.readlines():
-                for pattern in self.column_name.values():
+                for count, pattern in enumerate(self.column_name.values()):
                     answer_regular = re.findall(pattern, line)
                     if answer_regular:
                         with open(file=f"xml/{self.data['name_out_csv_file']}", mode='a', encoding=self.data['encoding']) as temp_csv:
-                            temp_csv.write(answer_regular[0][1] + '\n')
+                            print(count, count_column_name)
+                            if count < count_column_name - 1:
+                                end_text = ';'
+                            else:
+                                end_text = '\n'
+                                
+                            text = f"{answer_regular[0][1]}{end_text}"
+                            temp_csv.write(text)
                     else:
                         pass
 

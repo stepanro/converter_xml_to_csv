@@ -7,3 +7,5 @@
 replit.nix
 .breakpoints
 /xml
+converter/__pycache__/
+parametrs/__pycache__/
