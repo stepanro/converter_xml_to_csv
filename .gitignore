@@ -6,3 +6,7 @@
 .git
 replit.nix
 .DS_Store
+.breakpoints
+/xml
+converter/__pycache__/
+parametrs/__pycache__/
