@@ -55,10 +55,10 @@ class XmlToStlConverter:
                             if column_count + 1 < count_column_name:
                                 end_text = ';'
                             else:
+                                print(column_count)
                                 end_text = '\n'
                             text = f"{answer_regular[0][1]}{end_text}"
-                            temp_csv.write(text)
-                                      
+                            temp_csv.write(text)   
                     else:
                         pass
 
