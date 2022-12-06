@@ -42,7 +42,7 @@ class XmlToStlConverter:
         
         return path_input_file
 
-    def recursive_scanner(self):
+    def scanner(self):
         row_count = 0
         
         with open(file=self.data['path_input_file'], mode='r', encoding=self.data['encoding']) as temp_xml:
