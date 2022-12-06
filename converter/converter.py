@@ -58,6 +58,7 @@ class XmlToStlConverter:
                                 end_text = '\n'
                             text = f"{answer_regular[0][1]}{end_text}"
                             temp_csv.write(text)
+                                      
                     else:
                         pass
 
