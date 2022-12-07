@@ -1,6 +1,8 @@
 import argparse
 import re
 from chardet.universaldetector import UniversalDetector
+import xml.etree.ElementTree
+import csv
 
 
 class XmlToStlConverter:
