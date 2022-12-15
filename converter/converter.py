@@ -1,7 +1,7 @@
 import argparse
 import re
 from chardet.universaldetector import UniversalDetector
-import xml.etree.ElementTree
+import xml.etree.ElementTree as ET
 import csv
 
 
@@ -9,6 +9,7 @@ class XmlToStlConverter:
     def __init__(self, column_name):
         self.data = dict()
         self.column_name = column_name
+        self.temp_list = list()
 
     def detect_encoding(self, path_dir):
         with open(file=path_dir, mode='rb') as temp_xml:
@@ -45,23 +46,37 @@ class XmlToStlConverter:
         return path_input_file
 
     def scanner(self):
-        with open(file=self.data['path_input_file'], mode='r', encoding=self.data['encoding']) as temp_xml:
-            count_column_name = len(self.column_name)
-            for line in temp_xml.readlines():
-                for column_count, pattern in enumerate(self.column_name.values()):
-                    answer_regular = re.findall(pattern, line)
-                    if answer_regular:
-                        with open(file=f"{self.data['path_dir_input_file'] + self.data['name_out_csv_file']}", 
-                                  mode='a', encoding=self.data['encoding']) as temp_csv:
+        # with open(file=self.data['path_input_file'], mode='r', encoding=self.data['encoding']) as temp_xml:
+        #     count_column_name = len(self.column_name)
+        #     for line in temp_xml.readlines():
+        #         for column_count, pattern in enumerate(self.column_name.values()):
+        #             answer_regular = re.findall(pattern, line)
+        #             if answer_regular:
+        #                 with open(file=f"{self.data['path_dir_input_file'] + self.data['name_out_csv_file']}", 
+        #                           mode='a', encoding=self.data['encoding']) as temp_csv:
                             
-                            if column_count + 1 < count_column_name:
-                                end_text = ';'
-                            else:
-                                print(column_count)
-                                end_text = '\n'
-                            text = f"{answer_regular[0][1]}{end_text}"
-                            temp_csv.write(text)   
-                    else:
-                        pass
+        #                     if column_count + 1 < count_column_name:
+        #                         end_text = ';'
+        #                     else:
+        #                         print(column_count)
+        #                         end_text = '\n'
+        #                     text = f"{answer_regular[0][1]}{end_text}"
+        #                     temp_csv.write(text)   
+        #             else:
+        #                 pass
 
+        tree = ET.parse(self.data['path_input_file'])
+        root = tree.getroot()
 
+        for child in root:
+            for i in child:
+                if i.tag == 'Плательщик':
+                    for j in i:
+                        self.temp_list.append(j.text)
+                    with open(file=f"{self.data['path_dir_input_file']}{self.data['name_out_csv_file']}", 
+                              mode='a', encoding=self.data['encoding']) as temp_csv:
+                        writer = csv.writer(temp_csv)
+                        writer.writerow(self.temp_list)
+
+                    self.temp_list = list()
+                    
