@@ -23,9 +23,9 @@ class XmlToStlConverter:
                     
         self.data['encoding'] = encoding
 
-        with open(file=f"{self.data['path_dir_input_file']}{self.data['name_out_csv_file']}", 
-                  mode='a', encoding=self.data['encoding']) as temp_csv:
-            temp_csv.write(self.data['name_in_xml_file'] + ';')
+        # with open(file=f"{self.data['path_dir_input_file']}{self.data['name_out_csv_file']}", 
+        #           mode='a', encoding=self.data['encoding']) as temp_csv:
+        #     temp_csv.write(self.data['name_in_xml_file'] + ';')
 
     def arguments_parser(self):
         parser = argparse.ArgumentParser()
