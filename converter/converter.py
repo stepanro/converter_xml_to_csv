@@ -75,7 +75,7 @@ class XmlToStlConverter:
                         self.temp_list.append(j.text)
                     with open(file=f"{self.data['path_dir_input_file']}{self.data['name_out_csv_file']}", 
                               mode='a', encoding=self.data['encoding']) as temp_csv:
-                        writer = csv.writer(temp_csv)
+                        writer = csv.writer(temp_csv, quoting=csv.QUOTE_NONNUMERIC, delimiter=';')
                         writer.writerow(self.temp_list)
 
                     self.temp_list = list()
