@@ -70,6 +70,18 @@ class XmlToStlConverter:
 
         for child in root:
             for i in child:
+                for c in i:
+                    for v in c:
+                        if v.tag == 'ДатаФайл':
+                            self.temp_list.append(self.data['name_in_xml_file'])
+                            self.temp_list.append(v.text)
+                            with open(file=f"{self.data['path_dir_input_file']}{self.data['name_out_csv_file']}", 
+                              mode='a', encoding=self.data['encoding']) as temp_csv:
+                                writer = csv.writer(temp_csv, quoting=csv.QUOTE_NONNUMERIC, delimiter=';')
+                                writer.writerow(self.temp_list)
+                        
+                            self.temp_list = list()
+                            
                 if i.tag == 'Плательщик':
                     for j in i:
                         self.temp_list.append(j.text)
