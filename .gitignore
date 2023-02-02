@@ -8,7 +8,5 @@ replit.nix
 .DS_Store
 .breakpoints
 dir/*.csv
-dir/*.xml
 converter/__pycache__/
 parametrs/__pycache__/
-dir/test.csv
